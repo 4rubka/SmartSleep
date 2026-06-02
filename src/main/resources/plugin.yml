@@ -1,0 +1,33 @@
+name: SmartSleep
+version: '1.0.0'
+main: com.smartsleep.SmartSleepPlugin
+api-version: '1.21'
+author: SmartSleep
+description: Advanced sleep and rain voting for Paper survival servers.
+softdepend:
+  - PlaceholderAPI
+  - Vault
+  - Essentials
+  - Geyser-Spigot
+  - floodgate
+commands:
+  smartsleep:
+    description: SmartSleep main command.
+    usage: /smartsleep <reload|start|stop|stats|top|version>
+    aliases: [ssleep, sleepvote]
+permissions:
+  smartsleep.vote:
+    description: Allows players to participate in SmartSleep votes.
+    default: true
+  smartsleep.admin:
+    description: Allows full SmartSleep administration.
+    default: op
+  smartsleep.start:
+    description: Allows manual vote starts.
+    default: op
+  smartsleep.stats:
+    description: Allows viewing SmartSleep statistics.
+    default: true
+  smartsleep.top:
+    description: Allows viewing SmartSleep leaderboards.
+    default: true

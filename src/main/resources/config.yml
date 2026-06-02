@@ -1,0 +1,330 @@
+# SmartSleep by default is ready for survival servers and safe for large player counts.
+# MiniMessage and HEX colors are supported in all messages and GUI text.
+
+settings:
+  storage: YAML # YAML or SQLITE
+  debug: false
+  # Keeps the premium default menu/chat style after plugin updates.
+  # Set to false if you want to fully hand-edit gui/main-menu/messages.
+  force-modern-visuals: true
+  permissions:
+    vote: smartsleep.vote
+    admin: smartsleep.admin
+    start: smartsleep.start
+    stats: smartsleep.stats
+    top: smartsleep.top
+
+night-vote:
+  enabled: true
+  duration-seconds: 30
+  start-on-bed-enter: true
+  prevent-sleep-while-voting: true
+  end-immediately-when-threshold-met: true
+  skip-time: 1000
+
+rain-vote:
+  enabled: true
+  duration-seconds: 25
+  end-immediately-when-threshold-met: true
+
+vote-requirements:
+  default:
+    - range: "1-10"
+      percent: 50
+    - range: "11-30"
+      percent: 60
+    - range: "31-100"
+      percent: 70
+    - range: "101-500"
+      percent: 75
+  worlds:
+    world_nether:
+      enabled: false
+    world_the_end:
+      enabled: false
+
+multiworld:
+  mode: BLACKLIST # WHITELIST or BLACKLIST
+  worlds:
+    - world_nether
+    - world_the_end
+  per-world:
+    world:
+      night-duration-seconds: 30
+      rain-duration-seconds: 25
+
+afk:
+  enabled: true
+  exclude-from-calculations: true
+  hooks:
+    essentials: true
+    metadata: true
+
+gui:
+  enabled: true
+  theme: modern
+  size: 27
+  title: "<dark_gray>[</dark_gray><aqua><bold>SmartSleep</bold></aqua><dark_gray>]</dark_gray> <white>{type} Vote</white>"
+  update-open-inventories: true
+  themes:
+    modern:
+      filler:
+        material: BLUE_STAINED_GLASS_PANE
+        name: " "
+      yes:
+        slot: 11
+        material: LIME_CONCRETE
+        name: "<green><bold>YES</bold> <dark_gray>|</dark_gray> <white>Pass Vote</white>"
+        lore:
+          - "<dark_gray><st>-------------------</st>"
+          - "<gray>Vote to skip this <white>{type}</white> event."
+          - "<gray>Progress: <green>{yes}</green><dark_gray>/</dark_gray><white>{required}</white> <dark_gray>(</dark_gray><yellow>{percent}%</yellow><dark_gray>)</dark_gray>"
+          - "<gray>Time left: <aqua>{timer}s</aqua>"
+          - ""
+          - "<green>Click to vote YES."
+          - "<dark_gray><st>-------------------</st>"
+      stats:
+        slot: 13
+        material: CLOCK
+        name: "<aqua><bold>Live Vote Stats</bold>"
+        lore:
+          - "<dark_gray><st>-------------------</st>"
+          - "<gray>Eligible players: <white>{eligible}</white>"
+          - "<gray>Required percent: <yellow>{required_percent}%</yellow>"
+          - "<gray>YES votes: <green>{yes}</green><dark_gray>/</dark_gray><white>{required}</white>"
+          - "<gray>NO votes: <red>{no}</red>"
+          - "<gray>Progress: <aqua>{percent}%</aqua>"
+          - "<gray>Time left: <white>{timer}s</white>"
+          - "<dark_gray><st>-------------------</st>"
+      no:
+        slot: 15
+        material: RED_CONCRETE
+        name: "<red><bold>NO</bold> <dark_gray>|</dark_gray> <white>Reject Vote</white>"
+        lore:
+          - "<dark_gray><st>-------------------</st>"
+          - "<gray>Keep the current <white>{type}</white> state."
+          - "<gray>Current NO votes: <red>{no}</red>"
+          - ""
+          - "<red>Click to vote NO."
+          - "<dark_gray><st>-------------------</st>"
+    vanilla:
+      filler:
+        material: GRAY_STAINED_GLASS_PANE
+        name: " "
+    dark:
+      filler:
+        material: GRAY_STAINED_GLASS_PANE
+        name: " "
+    fantasy:
+      filler:
+        material: PURPLE_STAINED_GLASS_PANE
+        name: " "
+
+main-menu:
+  size: 54
+  title: "<dark_gray>[</dark_gray><aqua><bold>SmartSleep</bold></aqua><dark_gray>]</dark_gray> <white>Main Menu</white>"
+  filler:
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+  decorative-slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+  items:
+    vote-yes:
+      slot: 11
+      material: LIME_CONCRETE
+      name: "<green><bold>Vote YES</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Active vote: <white>{status}</white>"
+        - "<gray>YES votes: <green>{vote_yes}</green><gray>/</gray><white>{required}</white>"
+        - "<gray>Time left: <aqua>{timer}s</aqua>"
+        - ""
+        - "<green>Click to vote YES."
+        - "<dark_gray><st>-------------------</st>"
+    vote-no:
+      slot: 15
+      material: RED_CONCRETE
+      name: "<red><bold>Vote NO</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Active vote: <white>{status}</white>"
+        - "<gray>NO votes: <red>{vote_no}</red>"
+        - "<gray>Time left: <aqua>{timer}s</aqua>"
+        - ""
+        - "<red>Click to vote NO."
+        - "<dark_gray><st>-------------------</st>"
+    start-night:
+      slot: 20
+      material: BLUE_BED
+      name: "<aqua><bold>Start Night Vote</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Open a vote to skip the night."
+        - "<gray>World: <white>{world}</white>"
+        - "<gray>Status: <yellow>{status}</yellow>"
+        - ""
+        - "<aqua>Click to start."
+        - "<dark_gray><st>-------------------</st>"
+    start-rain:
+      slot: 24
+      material: WATER_BUCKET
+      name: "<blue><bold>Start Rain Vote</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Open a vote to clear rain or thunder."
+        - "<gray>Works separately from night voting."
+        - ""
+        - "<blue>Click to start."
+        - "<dark_gray><st>-------------------</st>"
+    status:
+      slot: 22
+      material: COMPASS
+      name: "<yellow><bold>Current Vote Status</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Active vote: <white>{status}</white>"
+        - "<gray>Storage: <aqua>{storage}</aqua>"
+        - "<gray>World: <white>{world}</white>"
+        - "<dark_gray><st>-------------------</st>"
+    stats:
+      slot: 30
+      material: BOOK
+      name: "<green><bold>Your Statistics</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Participation: <green>{participation}</green>"
+        - "<gray>Votes started: <aqua>{starts}</aqua>"
+        - "<gray>YES votes: <green>{yes_votes}</green>"
+        - "<gray>NO votes: <red>{no_votes}</red>"
+        - ""
+        - "<green>Click to print stats in chat."
+        - "<dark_gray><st>-------------------</st>"
+    top:
+      slot: 32
+      material: GOLD_INGOT
+      name: "<gold><bold>Leaderboards</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Nights skipped: <aqua>{nights}</aqua>"
+        - "<gray>Rain cleared: <blue>{rain}</blue>"
+        - "<gray>Successful votes: <green>{successful}</green>"
+        - "<gray>Failed votes: <red>{failed}</red>"
+        - ""
+        - "<gold>Click to show top voters."
+        - "<dark_gray><st>-------------------</st>"
+    settings:
+      slot: 4
+      material: NETHER_STAR
+      name: "<aqua><bold>SmartSleep Features</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>GUI voting, BossBar, ActionBar"
+        - "<gray>Dynamic requirements and AFK support"
+        - "<gray>Multiworld rules and rewards"
+        - "<gray>YAML/SQLite stats and placeholders"
+        - "<dark_gray><st>-------------------</st>"
+    stop:
+      slot: 40
+      material: BARRIER
+      name: "<red><bold>Stop Current Vote</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Admin action."
+        - "<gray>Stops the vote in your current world."
+        - ""
+        - "<red>Requires admin permission."
+        - "<dark_gray><st>-------------------</st>"
+    reload:
+      slot: 48
+      material: REPEATER
+      name: "<yellow><bold>Reload Plugin</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Reloads config, menus and services."
+        - "<yellow>Requires admin permission."
+        - "<dark_gray><st>-------------------</st>"
+    version:
+      slot: 50
+      material: NAME_TAG
+      name: "<white><bold>Plugin Version</bold>"
+      lore:
+        - "<dark_gray><st>-------------------</st>"
+        - "<gray>Shows the installed SmartSleep version."
+        - "<dark_gray><st>-------------------</st>"
+
+bossbar:
+  enabled: true
+  color: BLUE
+  style: SEGMENTED_10
+  title: "<aqua>SmartSleep</aqua> <dark_gray>|</dark_gray> <white>{type}</white> <dark_gray>|</dark_gray> <green>{yes}</green><gray>/</gray><white>{required}</white> <dark_gray>|</dark_gray> <yellow>{timer}s</yellow>"
+
+actionbar:
+  enabled: true
+  message: "<aqua>{type}</aqua> <gray>vote:</gray> <green>{yes}</green>/<white>{required}</white> <gray>required</gray> <red>{no}</red> <gray>no</gray> <yellow>{timer}s</yellow>"
+
+sounds:
+  vote-yes: ENTITY_EXPERIENCE_ORB_PICKUP
+  vote-no: BLOCK_NOTE_BLOCK_BASS
+  success: ENTITY_PLAYER_LEVELUP
+  fail: BLOCK_ANVIL_LAND
+
+rewards:
+  enabled: false
+  participation:
+    xp: 5
+    money: 0.0
+    commands: []
+    items: []
+  successful-vote:
+    xp: 10
+    money: 0.0
+    commands:
+      - "say {player} helped complete a SmartSleep vote"
+    items: []
+
+statistics:
+  enabled: true
+  global:
+    nights-skipped: true
+    rain-skipped: true
+    successful-votes: true
+    failed-votes: true
+  player:
+    vote-starts: true
+    successful-starts: true
+    yes-votes: true
+    no-votes: true
+    participation: true
+
+messages:
+  prefix: "<dark_gray>[</dark_gray><aqua><bold>SmartSleep</bold></aqua><dark_gray>]</dark_gray> "
+  no-permission: "{prefix}<red>You do not have permission to use this action.</red>"
+  reload: "{prefix}<green>Configuration, menus and services reloaded.</green>"
+  vote-started: "{prefix}<aqua>{player}</aqua> <gray>started a</gray> <white><bold>{type}</bold></white> <gray>vote.</gray>"
+  vote-already-running: "{prefix}<red>A vote is already running in this world.</red>"
+  vote-not-running: "{prefix}<red>No vote is running in this world.</red>"
+  vote-yes: "{prefix}<green>{player}</green> <gray>voted</gray> <green><bold>YES</bold></green> <dark_gray>(</dark_gray><green>{yes}</green><gray>/</gray><white>{required}</white><dark_gray>)</dark_gray>"
+  vote-no: "{prefix}<red>{player}</red> <gray>voted</gray> <red><bold>NO</bold></red> <dark_gray>(</dark_gray><red>{no}</red><dark_gray>)</dark_gray>"
+  vote-success: "{prefix}<green><bold>Vote passed.</bold></green> <gray>The</gray> <white>{type}</white> <gray>vote succeeded.</gray>"
+  vote-failed: "{prefix}<red><bold>Vote failed.</bold></red> <gray>Not enough players voted YES.</gray>"
+  not-eligible: "{prefix}<red>You are not eligible for this vote.</red>"
+  world-disabled: "{prefix}<red>SmartSleep voting is disabled in this world.</red>"
+  stats-header: "<dark_gray><st>-----</st> <aqua><bold>SmartSleep Statistics</bold></aqua> <dark_gray><st>-----</st>"
+  version: "{prefix}<gray>Running</gray> <aqua>SmartSleep</aqua> <white>{version}</white><gray>.</gray>"
